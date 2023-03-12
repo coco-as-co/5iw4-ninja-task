@@ -15,11 +15,11 @@ model Task {
   title       String
   description String   @default("")
   dueDate     DateTime @default(now())
-  status      Status   @default(todo)
+  status      Status   @default(TODO)
 }
 
 enum Status {
-  todo
-  doing
-  done
+  TODO
+  DOING
+  DONE
 }

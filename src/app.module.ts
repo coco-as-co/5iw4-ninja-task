@@ -16,7 +16,7 @@ import Joi from 'joi';
         NODE_ENV: Joi.string()
           .valid('development', 'production', 'test', 'provision')
           .default('development'),
-        PORT: Joi.number().default(5000),
+        PORT: Joi.number().default(5009),
         DATABASE_URL: Joi.string().required(),
       }),
     }),

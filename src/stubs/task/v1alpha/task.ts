@@ -42,6 +42,37 @@ export interface Task {
 // }
 
 /**
+ * @generated from protobuf message task.v1alpha.DeleteAllTasksResponse
+ */
+export interface DeleteAllTasksResponse {
+    /**
+     * @generated from protobuf field: int32 numberDeletedItems = 1;
+     */
+    numberDeletedItems: number;
+}
+/**
+ * @generated from protobuf message task.v1alpha.Void
+ */
+export interface Void {
+}
+/**
+ * @generated from protobuf message task.v1alpha.ListTask
+ */
+export interface ListTask {
+    /**
+     * @generated from protobuf field: task.v1alpha.Task taskInAction = 1;
+     */
+    taskInAction?: Task;
+    /**
+     * @generated from protobuf field: string action = 2;
+     */
+    action: string;
+    /**
+     * @generated from protobuf field: repeated task.v1alpha.Task tasks = 3;
+     */
+    tasks: Task[];
+}
+/**
  * @generated from protobuf message task.v1alpha.ListTasksRequest
  */
 export interface ListTasksRequest {
@@ -89,9 +120,9 @@ export interface GetTaskRequest {
     /**
      * The field will contain name of the resource requested.
      *
-     * @generated from protobuf field: string name = 1;
+     * @generated from protobuf field: int32 id = 1;
      */
-    name: string;
+    id: number;
 }
 /**
  * @generated from protobuf message task.v1alpha.CreateTaskRequest
@@ -135,24 +166,24 @@ export interface DeleteTaskRequest {
     /**
      * The resource name of the Task to be deleted.
      *
-     * @generated from protobuf field: string name = 1;
+     * @generated from protobuf field: int32 id = 1;
      */
-    name: string;
+    id: number;
 }
 /**
  * @generated from protobuf enum task.v1alpha.Status
  */
 export enum Status {
     /**
-     * @generated from protobuf enum value: STATUS_TODO = 0;
+     * @generated from protobuf enum value: TODO = 0;
      */
     TODO = 0,
     /**
-     * @generated from protobuf enum value: STATUS_DOING = 1;
+     * @generated from protobuf enum value: DOING = 1;
      */
     DOING = 1,
     /**
-     * @generated from protobuf enum value: STATUS_DONE = 2;
+     * @generated from protobuf enum value: DONE = 2;
      */
     DONE = 2
 }
@@ -164,7 +195,7 @@ class Task$Type extends MessageType<Task> {
             { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "due_date", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "status", kind: "enum", T: () => ["task.v1alpha.Status", Status, "STATUS_"] }
+            { no: 5, name: "status", kind: "enum", T: () => ["task.v1alpha.Status", Status] }
         ]);
     }
     create(value?: PartialMessage<Task>): Task {
@@ -231,6 +262,140 @@ class Task$Type extends MessageType<Task> {
  * @generated MessageType for protobuf message task.v1alpha.Task
  */
 export const Task = new Task$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DeleteAllTasksResponse$Type extends MessageType<DeleteAllTasksResponse> {
+    constructor() {
+        super("task.v1alpha.DeleteAllTasksResponse", [
+            { no: 1, name: "numberDeletedItems", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<DeleteAllTasksResponse>): DeleteAllTasksResponse {
+        const message = { numberDeletedItems: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<DeleteAllTasksResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DeleteAllTasksResponse): DeleteAllTasksResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int32 numberDeletedItems */ 1:
+                    message.numberDeletedItems = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: DeleteAllTasksResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int32 numberDeletedItems = 1; */
+        if (message.numberDeletedItems !== 0)
+            writer.tag(1, WireType.Varint).int32(message.numberDeletedItems);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message task.v1alpha.DeleteAllTasksResponse
+ */
+export const DeleteAllTasksResponse = new DeleteAllTasksResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Void$Type extends MessageType<Void> {
+    constructor() {
+        super("task.v1alpha.Void", []);
+    }
+    create(value?: PartialMessage<Void>): Void {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<Void>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Void): Void {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: Void, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message task.v1alpha.Void
+ */
+export const Void = new Void$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ListTask$Type extends MessageType<ListTask> {
+    constructor() {
+        super("task.v1alpha.ListTask", [
+            { no: 1, name: "taskInAction", kind: "message", T: () => Task },
+            { no: 2, name: "action", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "tasks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Task }
+        ]);
+    }
+    create(value?: PartialMessage<ListTask>): ListTask {
+        const message = { action: "", tasks: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ListTask>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ListTask): ListTask {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* task.v1alpha.Task taskInAction */ 1:
+                    message.taskInAction = Task.internalBinaryRead(reader, reader.uint32(), options, message.taskInAction);
+                    break;
+                case /* string action */ 2:
+                    message.action = reader.string();
+                    break;
+                case /* repeated task.v1alpha.Task tasks */ 3:
+                    message.tasks.push(Task.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ListTask, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* task.v1alpha.Task taskInAction = 1; */
+        if (message.taskInAction)
+            Task.internalBinaryWrite(message.taskInAction, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* string action = 2; */
+        if (message.action !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.action);
+        /* repeated task.v1alpha.Task tasks = 3; */
+        for (let i = 0; i < message.tasks.length; i++)
+            Task.internalBinaryWrite(message.tasks[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message task.v1alpha.ListTask
+ */
+export const ListTask = new ListTask$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ListTasksRequest$Type extends MessageType<ListTasksRequest> {
     constructor() {
@@ -350,11 +515,11 @@ export const ListTasksResponse = new ListTasksResponse$Type();
 class GetTaskRequest$Type extends MessageType<GetTaskRequest> {
     constructor() {
         super("task.v1alpha.GetTaskRequest", [
-            { no: 1, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "id", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value?: PartialMessage<GetTaskRequest>): GetTaskRequest {
-        const message = { name: "" };
+        const message = { id: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<GetTaskRequest>(this, message, value);
@@ -365,8 +530,8 @@ class GetTaskRequest$Type extends MessageType<GetTaskRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string name */ 1:
-                    message.name = reader.string();
+                case /* int32 id */ 1:
+                    message.id = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -380,9 +545,9 @@ class GetTaskRequest$Type extends MessageType<GetTaskRequest> {
         return message;
     }
     internalBinaryWrite(message: GetTaskRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string name = 1; */
-        if (message.name !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.name);
+        /* int32 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).int32(message.id);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -505,11 +670,11 @@ export const UpdateTaskRequest = new UpdateTaskRequest$Type();
 class DeleteTaskRequest$Type extends MessageType<DeleteTaskRequest> {
     constructor() {
         super("task.v1alpha.DeleteTaskRequest", [
-            { no: 1, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "id", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value?: PartialMessage<DeleteTaskRequest>): DeleteTaskRequest {
-        const message = { name: "" };
+        const message = { id: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<DeleteTaskRequest>(this, message, value);
@@ -520,8 +685,8 @@ class DeleteTaskRequest$Type extends MessageType<DeleteTaskRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string name */ 1:
-                    message.name = reader.string();
+                case /* int32 id */ 1:
+                    message.id = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -535,9 +700,9 @@ class DeleteTaskRequest$Type extends MessageType<DeleteTaskRequest> {
         return message;
     }
     internalBinaryWrite(message: DeleteTaskRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string name = 1; */
-        if (message.name !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.name);
+        /* int32 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).int32(message.id);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -552,9 +717,12 @@ export const DeleteTaskRequest = new DeleteTaskRequest$Type();
  * @generated ServiceType for protobuf service task.v1alpha.TaskService
  */
 export const TaskService = new ServiceType("task.v1alpha.TaskService", [
-    { name: "ListTasks", options: {}, I: ListTasksRequest, O: ListTasksResponse },
+    { name: "ListTasks", options: {}, I: Void, O: ListTasksResponse },
     { name: "GetTask", options: {}, I: GetTaskRequest, O: Task },
     { name: "CreateTask", options: {}, I: CreateTaskRequest, O: Task },
     { name: "UpdateTask", options: {}, I: UpdateTaskRequest, O: Task },
-    { name: "DeleteTask", options: {}, I: DeleteTaskRequest, O: Task }
+    { name: "DeleteTask", options: {}, I: DeleteTaskRequest, O: Task },
+    { name: "ListTasksPagination", options: {}, I: ListTasksRequest, O: ListTasksResponse },
+    { name: "StreamTasks", serverStreaming: true, options: {}, I: Void, O: ListTask },
+    { name: "DeleteAllTasks", options: {}, I: Void, O: DeleteAllTasksResponse }
 ]);

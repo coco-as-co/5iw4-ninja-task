@@ -11,14 +11,14 @@ message Task {
 }
 
 enum Status {
-  STATUS_TODO = 0;
-  STATUS_DOING = 1;
-  STATUS_DONE = 2;
+  TODO = 0;
+  DOING = 1;
+  DONE = 2;
 }
 
 // Generated according to https://cloud.google.com/apis/design/standard_methods
 service TaskService {
-  rpc ListTasks(ListTasksRequest) returns (ListTasksResponse) {}
+  rpc ListTasks(Void) returns (ListTasksResponse) {}
 
   rpc GetTask(GetTaskRequest) returns (Task) {}
 
@@ -27,11 +27,30 @@ service TaskService {
   rpc UpdateTask(UpdateTaskRequest) returns (Task) {}
 
   rpc DeleteTask(DeleteTaskRequest) returns (Task) {}
+
+  rpc ListTasksPagination(ListTasksRequest) returns (ListTasksResponse) {}
+
+  rpc StreamTasks (Void) returns (stream ListTask) {}
+
+  rpc DeleteAllTasks(Void) returns (DeleteAllTasksResponse) {}
 }
 
 // message Task {
 // ! This should be defined elsewere
 // }
+
+message DeleteAllTasksResponse {
+  int32 numberDeletedItems = 1;
+}
+
+message Void {
+}
+
+message ListTask {
+  Task taskInAction = 1;
+  string action = 2;
+  repeated Task tasks = 3;
+}
 
 message ListTasksRequest {
   // The parent resource name, for example, "shelves/shelf1"
@@ -55,7 +74,7 @@ message ListTasksResponse {
 
 message GetTaskRequest {
   // The field will contain name of the resource requested.
-  string name = 1;
+  int32 id = 1;
 }
 
 message CreateTaskRequest {
@@ -81,5 +100,5 @@ message UpdateTaskRequest {
 
 message DeleteTaskRequest {
   // The resource name of the Task to be deleted.
-  string name = 1;
+  int32 id = 1;
 }

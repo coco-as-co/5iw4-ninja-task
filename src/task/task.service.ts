@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -16,22 +17,57 @@ export class TaskService {
     });
   }
 
+  findLast() {
+    return this.prisma.task.findFirst({
+      orderBy: {
+        id: 'desc',
+      },
+    });
+  }
+
   findAll() {
-    return this.prisma.task.findMany();
+    return this.prisma.task.findMany({
+      orderBy: {
+        id: 'asc',
+      },
+    });
+  }
+
+  findAllWithPagination(cursor: number, take: number) {
+    return this.prisma.task.findMany({
+      take: take,
+      where: {
+        id: {
+          gt: cursor,
+        },
+      },
+      orderBy: {
+        id: 'asc',
+      },
+    });
+  }
+
+  countAll() {
+    return this.prisma.task.count();
+  }
+
+  async findAllBy(condition: object) {
+    return await this.prisma.task.findMany(condition);
   }
 
   async findById(id: number) {
-    const task = await this.prisma.task.findUnique({
+    if (isNaN(id) || id < 0) {
+      throw new BadRequestException(`Invalid id ${id}`);
+    }
+
+    const task = await this.prisma.task.findFirstOrThrow({
       where: { id },
     });
-    if (!task) {
-      throw new NotFoundException('Task not found');
-    }
 
     return task;
   }
 
-  async update(id: number, data: CreateTaskDto) {
+  async update(id: number, data: UpdateTaskDto) {
     const task = await this.findById(id);
 
     try {
@@ -40,7 +76,18 @@ export class TaskService {
         data,
       });
     } catch (error) {
-      throw new Error(error.message);
+      if (error?.code === 'P2025') {
+        throw new NotFoundException(`Task with id ${id} not found`);
+      }
+      if (error?.code === 'P2002') {
+        throw new BadRequestException(`Invalid id ${id}`);
+      }
+      if (error?.code === 'P2003') {
+        throw new BadRequestException(
+          `Foreign key constraint failed on the Taskwith id ${id}`,
+        );
+      }
+      throw new BadRequestException(error.message);
     }
   }
 
@@ -53,6 +100,24 @@ export class TaskService {
       if (error?.code === 'P2025') {
         throw new NotFoundException(`Task with id ${id} not found`);
       }
+      if (error?.code === 'P2002') {
+        throw new BadRequestException(`Invalid id ${id}`);
+      }
+      if (error?.code === 'P2003') {
+        throw new BadRequestException(
+          `Foreign key constraint failed on the Task with id ${id}`,
+        );
+      }
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  async removeAll() {
+    try {
+      return await (
+        await this.prisma.task.deleteMany()
+      ).count;
+    } catch (error) {
       throw new BadRequestException(error.message);
     }
   }

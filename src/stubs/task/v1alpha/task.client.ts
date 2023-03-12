@@ -4,6 +4,10 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { TaskService } from "./task";
+import type { DeleteAllTasksResponse } from "./task";
+import type { ListTask } from "./task";
+import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
+import type { ListTasksRequest } from "./task";
 import type { DeleteTaskRequest } from "./task";
 import type { UpdateTaskRequest } from "./task";
 import type { CreateTaskRequest } from "./task";
@@ -11,7 +15,7 @@ import type { Task } from "./task";
 import type { GetTaskRequest } from "./task";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type { ListTasksResponse } from "./task";
-import type { ListTasksRequest } from "./task";
+import type { Void } from "./task";
 import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
 import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
 /**
@@ -21,9 +25,9 @@ import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
  */
 export interface ITaskServiceClient {
     /**
-     * @generated from protobuf rpc: ListTasks(task.v1alpha.ListTasksRequest) returns (task.v1alpha.ListTasksResponse);
+     * @generated from protobuf rpc: ListTasks(task.v1alpha.Void) returns (task.v1alpha.ListTasksResponse);
      */
-    listTasks(input: ListTasksRequest, options?: RpcOptions): UnaryCall<ListTasksRequest, ListTasksResponse>;
+    listTasks(input: Void, options?: RpcOptions): UnaryCall<Void, ListTasksResponse>;
     /**
      * @generated from protobuf rpc: GetTask(task.v1alpha.GetTaskRequest) returns (task.v1alpha.Task);
      */
@@ -40,6 +44,18 @@ export interface ITaskServiceClient {
      * @generated from protobuf rpc: DeleteTask(task.v1alpha.DeleteTaskRequest) returns (task.v1alpha.Task);
      */
     deleteTask(input: DeleteTaskRequest, options?: RpcOptions): UnaryCall<DeleteTaskRequest, Task>;
+    /**
+     * @generated from protobuf rpc: ListTasksPagination(task.v1alpha.ListTasksRequest) returns (task.v1alpha.ListTasksResponse);
+     */
+    listTasksPagination(input: ListTasksRequest, options?: RpcOptions): UnaryCall<ListTasksRequest, ListTasksResponse>;
+    /**
+     * @generated from protobuf rpc: StreamTasks(task.v1alpha.Void) returns (stream task.v1alpha.ListTask);
+     */
+    streamTasks(input: Void, options?: RpcOptions): ServerStreamingCall<Void, ListTask>;
+    /**
+     * @generated from protobuf rpc: DeleteAllTasks(task.v1alpha.Void) returns (task.v1alpha.DeleteAllTasksResponse);
+     */
+    deleteAllTasks(input: Void, options?: RpcOptions): UnaryCall<Void, DeleteAllTasksResponse>;
 }
 /**
  * Generated according to https://cloud.google.com/apis/design/standard_methods
@@ -53,11 +69,11 @@ export class TaskServiceClient implements ITaskServiceClient, ServiceInfo {
     constructor(private readonly _transport: RpcTransport) {
     }
     /**
-     * @generated from protobuf rpc: ListTasks(task.v1alpha.ListTasksRequest) returns (task.v1alpha.ListTasksResponse);
+     * @generated from protobuf rpc: ListTasks(task.v1alpha.Void) returns (task.v1alpha.ListTasksResponse);
      */
-    listTasks(input: ListTasksRequest, options?: RpcOptions): UnaryCall<ListTasksRequest, ListTasksResponse> {
+    listTasks(input: Void, options?: RpcOptions): UnaryCall<Void, ListTasksResponse> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options);
-        return stackIntercept<ListTasksRequest, ListTasksResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<Void, ListTasksResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: GetTask(task.v1alpha.GetTaskRequest) returns (task.v1alpha.Task);
@@ -86,5 +102,26 @@ export class TaskServiceClient implements ITaskServiceClient, ServiceInfo {
     deleteTask(input: DeleteTaskRequest, options?: RpcOptions): UnaryCall<DeleteTaskRequest, Task> {
         const method = this.methods[4], opt = this._transport.mergeOptions(options);
         return stackIntercept<DeleteTaskRequest, Task>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: ListTasksPagination(task.v1alpha.ListTasksRequest) returns (task.v1alpha.ListTasksResponse);
+     */
+    listTasksPagination(input: ListTasksRequest, options?: RpcOptions): UnaryCall<ListTasksRequest, ListTasksResponse> {
+        const method = this.methods[5], opt = this._transport.mergeOptions(options);
+        return stackIntercept<ListTasksRequest, ListTasksResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: StreamTasks(task.v1alpha.Void) returns (stream task.v1alpha.ListTask);
+     */
+    streamTasks(input: Void, options?: RpcOptions): ServerStreamingCall<Void, ListTask> {
+        const method = this.methods[6], opt = this._transport.mergeOptions(options);
+        return stackIntercept<Void, ListTask>("serverStreaming", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: DeleteAllTasks(task.v1alpha.Void) returns (task.v1alpha.DeleteAllTasksResponse);
+     */
+    deleteAllTasks(input: Void, options?: RpcOptions): UnaryCall<Void, DeleteAllTasksResponse> {
+        const method = this.methods[7], opt = this._transport.mergeOptions(options);
+        return stackIntercept<Void, DeleteAllTasksResponse>("unary", this._transport, method, opt, input);
     }
 }
